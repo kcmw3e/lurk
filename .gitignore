@@ -6,3 +6,7 @@ Makefile
 
 sandbox
 build
+
+.cache
+.kateproject
+
