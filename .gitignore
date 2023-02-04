@@ -10,3 +10,4 @@ build
 .cache
 .kateproject
 
+compile_commands.json
