@@ -29,7 +29,7 @@
 #ifndef LURK_NO_CALL_RETURN_ERROR
 #   define LURK_ERROR_CALL lurk_err
 #else
-#   define LURK_ERROR_CALL return
+#   define LURK_ERROR_CALL(result, ...) result
 #endif
 
 #define RETURN_BAD_PARAM(param)                                                                    \
