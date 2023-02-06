@@ -127,8 +127,6 @@ result_t log_default(result_t result, const char* restrict fmt, va_list args) {
 
     if (!get_config_do_log()) return result;
 
-    if (fmt == NULL) fprintf(stderr, "received badness\n"); // [*** fix this ***]
-
     const char* projname = get_config_projname();
 
     struct tm t = get_time();
