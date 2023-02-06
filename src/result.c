@@ -114,7 +114,6 @@ result_t lurk_err(result_t result, const char* caller, const char* loc, const ch
 
     va_start(args, fmt);
 
-
     result = (*err_fn)(result, caller, loc, fmt, args);
 
     va_end(args);
