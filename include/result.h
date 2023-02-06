@@ -33,18 +33,18 @@
 #endif
 
 #define RETURN_BAD_PARAM(param)                                                                    \
-    LURK_ERROR_CALL(RESULT_BAD_PARAM, __func__, LURK_LINE_STRING, "Bad parameter ["#param"].\n")
+    LURK_ERROR_CALL(RESULT_BAD_PARAM, __func__, LURK_LINE_STRING, "Bad parameter ["#param"].")
 
 #define RETURN_BAD_PARAM_NULL(param)                                                               \
     LURK_ERROR_CALL(RESULT_BAD_PARAM, __func__, LURK_LINE_STRING,                                  \
-             "Bad parameter ["#param"]. Must not be [NULL]\n")
+             "Bad parameter ["#param"]. Must not be [NULL]")
 
 #define RETURN_INVALID_OBJECT_MEMBER(obj, member)                                                  \
     LURK_ERROR_CALL(RESULT_INVALID_OBJECT, __func__, LURK_LINE_STRING,                             \
-             "Invalid object member ["#obj"."#member"].\n")
+             "Invalid object member ["#obj"."#member"].")
 
 #define RETURN_INTERNAL_ERROR()                                                                    \
-    LURK_ERROR_CALL(RESULT_INTERNAL_ERROR, __func__, LURK_LINE_STRING, "Internal error.\n")
+    LURK_ERROR_CALL(RESULT_INTERNAL_ERROR, __func__, LURK_LINE_STRING, "Internal error.")
 
 
 // The result enum defines many common results. They are split into to four categories: error,
@@ -159,6 +159,9 @@ typedef enum result boolresult_t;
 //          * otherwise, any integer that fits in the underlying type of [result_t] if logging the
 //            error was unsuccessful
 // Notes
+//  * if using [lurk_log] and [lurk_err], it is up to these functions to output a new line after the
+//    logging (unless [fmt] contains the new line; it is up to the programmer in that case)
+//      * the default log and error functions automatically add a new line
 typedef result_t result_log_fn(result_t result, const char* fmt, va_list args);
 typedef result_t result_err_fn(result_t result,
                                const char* caller, const char* loc,
@@ -263,6 +266,7 @@ bool is_lurk_err(result_t result);
 // [lurk_log]
 //  * logs a result with the active [result_log_fn] unless the current config has
 //    [result_config.do_log] set to [false]
+//  * note that the default log function automatically outputs a new line after printing [fmt]
 //  == Parameters ==
 //      [result]
 //          * the result that is being logged
@@ -283,6 +287,7 @@ bool is_lurk_err(result_t result);
 // [lurk_err]
 //  * logs an error result with the active [result_err_fn] unless the current config has
 //    [result_config.do_err] set to [false]
+//  * note that the default error function automatically outputs a new line after printing [fmt]
 //  == Parameters ==
 //      [result]
 //          * the result that is being logged

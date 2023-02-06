@@ -142,6 +142,9 @@ result_t log_default(result_t result, const char* restrict fmt, va_list args) {
     n = vfprintf(stdout, fmt, args);
     if (n < 0) abort();
 
+    n = fprintf(stdout, "\n");
+    if (n < 0) abort();
+
     return result;
 }
 
@@ -162,6 +165,9 @@ result_t err_default(result_t result, const char* caller, const char* loc, const
     if (n < 0) abort(); // this *shouldn't* ever happen, but just in case
 
     n = vfprintf(stderr, fmt, args);
+    if (n < 0) abort();
+
+    n = fprintf(stderr, "\n");
     if (n < 0) abort();
 
     return result;
