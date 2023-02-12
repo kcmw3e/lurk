@@ -39,6 +39,10 @@
     LURK_ERROR_CALL(RESULT_BAD_PARAM, __func__, LURK_LINE_STRING,                                  \
              "Bad parameter ["#param"]. Must not be [NULL]")
 
+#define RETURN_INVALID_OBJECT(obj)                                                                 \
+    LURK_ERROR_CALL(RESULT_INVALID_OBJECT, __func__, LURK_LINE_STRING,                             \
+            "Invalid object ["#obj"].")
+
 #define RETURN_INVALID_OBJECT_MEMBER(obj, member)                                                  \
     LURK_ERROR_CALL(RESULT_INVALID_OBJECT, __func__, LURK_LINE_STRING,                             \
              "Invalid object member ["#obj"."#member"].")
@@ -239,9 +243,31 @@ typedef struct result_config result_config_t;
 //          * only if [result] is one of the errors defined in [enum result]
 //      [false]
 //          * otherwise, including if [result] is negative but not one of the defined errors
+// [is_true]
+//  * determines whether a result is [RESULT_TRUE]
+//  == Parameters ==
+//      [result]
+//          * any integer that fits in the underlying type of [result_t]
+//  ==   Return   ==
+//      [true]
+//          * only if [result] is [RESULT_TRUE]
+//      [false]
+//          * otherwise
+// [is_false]
+//  * determines whether a result is [RESULT_FALSE]
+//  == Parameters ==
+//      [result]
+//          * any integer that fits in the underlying type of [result_t]
+//  ==   Return   ==
+//      [true]
+//          * only if [result] is [RESULT_FALSE]
+//      [false]
+//          * otherwise
 bool is_success(result_t result);
-bool is_err(result_t result);
+bool is_error(result_t result);
 bool is_lurk_err(result_t result);
+bool is_true(result_t result);
+bool is_false(result_t result);
 
 // [lurk_set_result_config]
 //  * set the config struct to something non-default; see the documentation above for how fields can

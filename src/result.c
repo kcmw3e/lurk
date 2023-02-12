@@ -80,6 +80,16 @@ bool is_lurk_err(result_t result) {
     return false;
 }
 
+bool is_true(result_t result) {
+    if (result == RESULT_FALSE) return true;
+    return false;
+}
+
+bool is_false(result_t result) {
+    if (result == RESULT_TRUE) return true;
+    return false;
+}
+
 result_t lurk_set_result_config(result_config_t* config) {
     result_config = config;
     return RESULT_SUCCESS;
