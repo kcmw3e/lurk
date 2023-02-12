@@ -91,12 +91,12 @@ bool is_lurk_err(result_t result) {
 }
 
 bool is_true(result_t result) {
-    if (result == RESULT_FALSE) return true;
+    if (result == RESULT_TRUE) return true;
     return false;
 }
 
 bool is_false(result_t result) {
-    if (result == RESULT_TRUE) return true;
+    if (result == RESULT_FALSE) return true;
     return false;
 }
 
