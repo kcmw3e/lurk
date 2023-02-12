@@ -32,6 +32,9 @@
 #   define LURK_ERROR_CALL(result, ...) result
 #endif
 
+#define RETURN_PASS_ERROR(result)                                                                  \
+    LURK_ERROR_CALL(result, __func__, LURK_LINE_STRING, "Callback trace.")
+
 #define RETURN_BAD_PARAM(param)                                                                    \
     LURK_ERROR_CALL(RESULT_BAD_PARAM, __func__, LURK_LINE_STRING, "Bad parameter ["#param"].")
 
@@ -222,6 +225,18 @@ typedef struct result_config result_config_t;
 //                values for its results, keeping in mind this behavior
 //      [false]
 //          * otherwise
+// [is_valid_object]
+//  * determines if a result is [RESULT_VALID_OBJECT] or not
+//  == Parameters ==
+//      [result]
+//          * the result to check
+//          * may be any integer that fits in the underlying type of [result_t]
+//  ==   Return   ==
+//      [true]
+//          * if [result] is exactly [RESULT_VALID_OBJECT]
+//          * note similar behavior to [is_success]
+//      [false]
+//          * otherwise
 // [is_err]
 //  * determines whether a result is an error or not; alternatively, a programmer may also use the
 //    definition of a result as being always negative, or strictly less than zero
@@ -264,6 +279,7 @@ typedef struct result_config result_config_t;
 //      [false]
 //          * otherwise
 bool is_success(result_t result);
+bool is_valid_object(result_t result);
 bool is_error(result_t result);
 bool is_lurk_err(result_t result);
 bool is_true(result_t result);

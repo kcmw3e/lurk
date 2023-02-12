@@ -64,7 +64,17 @@ result_err_fn* get_config_err_fn() {
     return err_fn;
 }
 
-bool is_err(result_t result) {
+bool is_success(result_t result) {
+    if (result == RESULT_SUCCESS) return true;
+    return false;
+}
+
+bool is_valid_object(result_t result) {
+    if (result == RESULT_VALID_OBJECT) return true;
+    return false;
+}
+
+bool is_error(result_t result) {
     return result < 0;
 }
 
