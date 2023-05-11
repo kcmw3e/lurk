@@ -10,6 +10,7 @@ void err_default(result_t result, const char* caller, const char* loc, const cha
 
 static const result_config_t result_config_default = {
     .projname = "lurk",
+    .prefix = "",
     .do_log = true,
     .do_err = true,
     .log_fn = &log_default,
@@ -33,6 +34,15 @@ const char* get_config_projname() {
     if (projname == NULL) return result_config_default.projname;
 
     return projname;
+}
+
+const char* get_config_prefix() {
+    if (result_config == NULL) return result_config_default.prefix;
+
+    const char* prefix = result_config->prefix;
+    if (prefix == NULL) return result_config_default.prefix;
+
+    return prefix;
 }
 
 bool get_config_do_log() {
@@ -153,13 +163,14 @@ void log_default(result_t result, const char* restrict fmt, va_list args) {
     if (!get_config_do_log()) return;
 
     const char* projname = get_config_projname();
+    const char* prefix = get_config_prefix();
 
     struct tm t = get_time();
 
     int n;
 
-    n = fprintf(stdout, "%02d:%02d:%02d  %08x  [%s]  ",
-                    t.tm_hour, t.tm_min, t.tm_sec, result, projname);
+    n = fprintf(stdout, "%02d:%02d:%02d  %08x  [%s]  %s",
+                    t.tm_hour, t.tm_min, t.tm_sec, result, projname, prefix);
 
     // this *shouldn't* ever happen, but can't be too careful (if it does, the calling program
     // should be able to intercept the abort signal if desired)
@@ -183,9 +194,11 @@ void err_default(result_t result, const char* caller, const char* loc, const cha
     struct tm t = get_time();
 
     const char* projname = get_config_projname();
+    const char* prefix = get_config_prefix();
 
-    int n = fprintf(stderr, "%02d:%02d:%02d  %08x  [%s:%s.%s]  ",
-                    t.tm_hour, t.tm_min, t.tm_sec, result, projname, caller, loc);
+    int n = fprintf(stderr, "%02d:%02d:%02d  %08x  [%s:%s.%s]  %s",
+                    t.tm_hour, t.tm_min, t.tm_sec, result, projname, caller, loc, prefix);
+
     if (n < 0) abort(); // this *shouldn't* ever happen, but just in case
 
     n = vfprintf(stderr, fmt, args);

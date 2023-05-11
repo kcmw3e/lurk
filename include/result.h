@@ -186,6 +186,7 @@ typedef void result_err_fn(result_t result,
 //        and bypass calling the default error logging function
 struct result_config {
     const char* projname;
+    const char* prefix;
     bool do_log;
     bool do_err;
     result_log_fn* log_fn;

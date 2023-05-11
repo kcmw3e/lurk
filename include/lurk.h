@@ -20,9 +20,5 @@
 
 #include "result.h"
 
-struct lurk_cfg {
-    const char* project_name;
-};
-
 #endif // LURK_H
 
