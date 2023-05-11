@@ -133,13 +133,6 @@ typedef enum result boolresult_t;
 //          * lurk functions calling a [result_log_fn] function will never pass [NULL]
 //      [args]
 //          * a variable list of args to fit with [fmt] for printf-style printing
-//  ==   Return   ==
-//      [RESULT_SUCCESS]
-//          * a [result_log_fn] intended for use with lurk should always return [RESULT_SUCCESS] on
-//            successful logging
-//      [result_t]
-//          * otherwise, any integer that fits in the underlying type of [result_t] if logging was
-//            unsuccessful
 // [result_err_fn]
 //  * defines a type of function for logging errors, especially useful for debugging and logging
 //    errors before a crash
@@ -158,19 +151,12 @@ typedef enum result boolresult_t;
 //          * lurk functions calling a [result_err_fn] function will never pass [NULL]
 //      [args]
 //          * a variable list of args to fit with [fmt] for printf-style printing
-//  ==   Return   ==
-//      [RESULT_SUCCESS]
-//          * a [result_err_fn] intended for use with lurk should always return [RESULT_SUCCESS] on
-//            successful logging of the error
-//      [result_t]
-//          * otherwise, any integer that fits in the underlying type of [result_t] if logging the
-//            error was unsuccessful
 // Notes
 //  * if using [lurk_log] and [lurk_err], it is up to these functions to output a new line after the
-//    logging (unless [fmt] contains the new line; it is up to the programmer in that case)
+//    logging (unless [fmt] contains the new line, where it is up to the programmer in that case)
 //      * the default log and error functions automatically add a new line
-typedef result_t result_log_fn(result_t result, const char* fmt, va_list args);
-typedef result_t result_err_fn(result_t result,
+typedef void result_log_fn(result_t result, const char* fmt, va_list args);
+typedef void result_err_fn(result_t result,
                                const char* caller, const char* loc,
                                const char* fmt, va_list args);
 
@@ -318,14 +304,8 @@ bool is_false(result_t result);
 //          * the rest of the arguments for printing in the format string [fmt]; must match the
 //            specifiers in [fmt] like in printf-like functions
 //  ==   Return   ==
-//      [RESULT_BAD_PARAM]
-//          * if [fmt] is [NULL]
-//      [RESULT_SUCCESS]
-//          * on successful logging, or if the current config set [result_config.do_log] to [false]
-//      [result_t]
-//          * any integer that fits in the underlying type of [result_t] if logging was unsuccessful
-//          * if neither of the above, the result may be any value returned from the active config
-//            error function, [result_config.log_fn]
+//      [result]
+//          * will always return the result passed to it
 // [lurk_err]
 //  * logs an error result with the active [result_err_fn] unless the current config has
 //    [result_config.do_err] set to [false]
@@ -349,14 +329,8 @@ bool is_false(result_t result);
 //          * the rest of the arguments for printing in the format string [fmt]; must match the
 //            specifiers in [fmt] like in printf-like functions
 //  ==   Return   ==
-//      [RESULT_BAD_PARAM]
-//          * if [fmt] is [NULL]
-//      [RESULT_SUCCESS]
-//          * on successful logging, or if the current config set [result_config.do_err] to [false]
-//      [result_t]
-//          * any integer that fits in the underlying type of [result_t] if logging was unsuccessful
-//          * if neither of the above, the result may be any value returned from the active config
-//            error function, [result_config.err_fn]
+//      [result]
+//          * will always return the result passed to it
 result_t lurk_set_result_config(result_config_t* config);
 result_t lurk_get_defaults(result_config_t* config);
 result_t lurk_log(result_t result, const char* fmt, ...);

@@ -2,12 +2,11 @@
 #include <stdlib.h>
 #include <time.h>
 
-
 #include "lurk.h"
 #include "result.h"
 
-result_t log_default(result_t result, const char* restrict fmt, va_list args);
-result_t err_default(result_t result, const char* caller, const char* loc, const char* restrict fmt, va_list args);
+void log_default(result_t result, const char* restrict fmt, va_list args);
+void err_default(result_t result, const char* caller, const char* loc, const char* restrict fmt, va_list args);
 
 static const result_config_t result_config_default = {
     .projname = "lurk",
@@ -18,7 +17,6 @@ static const result_config_t result_config_default = {
 };
 
 static const result_config_t* result_config = NULL;
-
 
 struct tm get_time() {
     time_t traw = time(NULL);
@@ -114,9 +112,9 @@ result_t lurk_get_defaults(result_config_t* config) {
 }
 
 result_t lurk_log(result_t result, const char* fmt, ...) {
-    if (fmt == NULL) return RESULT_BAD_PARAM;
+    if (fmt == NULL) return result;
 
-    if (!get_config_do_log()) return RESULT_SUCCESS;
+    if (!get_config_do_log()) return result;
 
     result_log_fn* log_fn = get_config_log_fn();
 
@@ -124,17 +122,17 @@ result_t lurk_log(result_t result, const char* fmt, ...) {
 
     va_start(args, fmt);
 
-    result = (*log_fn)(result, fmt, args);
+    (*log_fn)(result, fmt, args);
 
     va_end(args);
 
-    return RESULT_SUCCESS;
+    return result;
 }
 
 result_t lurk_err(result_t result, const char* caller, const char* loc, const char* fmt, ...) {
-    if (fmt == NULL) return RESULT_BAD_PARAM;
+    if (fmt == NULL) return result;
 
-    if (!get_config_do_err()) return RESULT_SUCCESS;
+    if (!get_config_do_err()) return result;
 
     result_err_fn* err_fn = get_config_err_fn();
 
@@ -142,17 +140,17 @@ result_t lurk_err(result_t result, const char* caller, const char* loc, const ch
 
     va_start(args, fmt);
 
-    result = (*err_fn)(result, caller, loc, fmt, args);
+    (*err_fn)(result, caller, loc, fmt, args);
 
     va_end(args);
 
     return result;
 }
 
-result_t log_default(result_t result, const char* restrict fmt, va_list args) {
-    if (fmt == NULL) return RESULT_BAD_PARAM;
+void log_default(result_t result, const char* restrict fmt, va_list args) {
+    if (fmt == NULL) return;
 
-    if (!get_config_do_log()) return result;
+    if (!get_config_do_log()) return;
 
     const char* projname = get_config_projname();
 
@@ -172,14 +170,12 @@ result_t log_default(result_t result, const char* restrict fmt, va_list args) {
 
     n = fprintf(stdout, "\n");
     if (n < 0) abort();
-
-    return result;
 }
 
-result_t err_default(result_t result, const char* caller, const char* loc, const char* restrict fmt, va_list args) {
-    if (fmt == NULL) return RESULT_BAD_PARAM;
+void err_default(result_t result, const char* caller, const char* loc, const char* restrict fmt, va_list args) {
+    if (fmt == NULL) return;
 
-    if (!get_config_do_err()) return result;
+    if (!get_config_do_err()) return;
 
     if (caller == NULL) caller = "(unknown)";
     if (loc == NULL) loc = "???";
@@ -197,6 +193,4 @@ result_t err_default(result_t result, const char* caller, const char* loc, const
 
     n = fprintf(stderr, "\n");
     if (n < 0) abort();
-
-    return result;
 }
