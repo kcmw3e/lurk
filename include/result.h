@@ -53,6 +53,9 @@
 #define RETURN_INTERNAL_ERROR()                                                                    \
     LURK_ERROR_CALL(RESULT_INTERNAL_ERROR, __func__, LURK_LINE_STRING, "Internal error.")
 
+#define RETURN_ERROR(result, err)                                                                  \
+    LURK_ERROR_CALL(result, __func__, LURK_LINE_STRING, err)
+
 
 // The result enum defines many common results. They are split into to four categories: error,
 // success, boolean, and status. Errors are always negative, statuses are always positive, and
