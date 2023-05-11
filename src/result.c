@@ -3,6 +3,7 @@
 #include <time.h>
 
 
+#include "lurk.h"
 #include "result.h"
 
 result_t log_default(result_t result, const char* restrict fmt, va_list args);
@@ -102,6 +103,13 @@ bool is_false(result_t result) {
 
 result_t lurk_set_result_config(result_config_t* config) {
     result_config = config;
+    return RESULT_SUCCESS;
+}
+
+result_t lurk_get_defaults(result_config_t* config) {
+    if (config == NULL) return RETURN_BAD_PARAM_NULL(config);
+    *config = result_config_default;
+
     return RESULT_SUCCESS;
 }
 
