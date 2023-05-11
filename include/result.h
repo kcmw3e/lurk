@@ -117,8 +117,8 @@ enum result {
 };
 
 
-typedef enum result result_t;
-typedef enum result boolresult_t;
+typedef int result_t;
+typedef int boolresult_t;
 
 
 // There is a small set of configuration available to specify how and when results should be logged.
