@@ -11,6 +11,7 @@ void err_default(result_t result, const char* caller, const char* loc, const cha
 static const result_config_t result_config_default = {
     .projname = "lurk",
     .prefix = "",
+    .postfix = "\n",
     .do_log = true,
     .do_err = true,
     .log_fn = &log_default,
@@ -43,6 +44,15 @@ const char* get_config_prefix() {
     if (prefix == NULL) return result_config_default.prefix;
 
     return prefix;
+}
+
+const char* get_config_postfix() {
+    if (result_config == NULL) return result_config_default.postfix;
+
+    const char* postfix = result_config->postfix;
+    if (postfix == NULL) return result_config_default.postfix;
+
+    return postfix;
 }
 
 bool get_config_do_log() {
@@ -164,6 +174,7 @@ void log_default(result_t result, const char* restrict fmt, va_list args) {
 
     const char* projname = get_config_projname();
     const char* prefix = get_config_prefix();
+    const char* postfix = get_config_postfix();
 
     struct tm t = get_time();
 
@@ -179,7 +190,7 @@ void log_default(result_t result, const char* restrict fmt, va_list args) {
     n = vfprintf(stdout, fmt, args);
     if (n < 0) abort();
 
-    n = fprintf(stdout, "\n");
+    n = fprintf(stdout, "%s", postfix);
     if (n < 0) abort();
 }
 
@@ -195,6 +206,7 @@ void err_default(result_t result, const char* caller, const char* loc, const cha
 
     const char* projname = get_config_projname();
     const char* prefix = get_config_prefix();
+    const char* postfix = get_config_postfix();
 
     int n = fprintf(stderr, "%02d:%02d:%02d  %08x  [%s:%s.%s]  %s",
                     t.tm_hour, t.tm_min, t.tm_sec, result, projname, caller, loc, prefix);
@@ -204,6 +216,6 @@ void err_default(result_t result, const char* caller, const char* loc, const cha
     n = vfprintf(stderr, fmt, args);
     if (n < 0) abort();
 
-    n = fprintf(stderr, "\n");
+    n = fprintf(stderr, "%s", postfix);
     if (n < 0) abort();
 }
