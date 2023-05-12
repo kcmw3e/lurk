@@ -172,6 +172,9 @@ typedef void result_err_fn(result_t result,
 //        to tag its logs with a certain tag or project name should add this to the config
 //      * if a program is defining its config but doesn't wish to specify a project name, it may
 //        leave this field as [NULL] or, if it wishes there to be no tag at all, simply [""]
+//  [.prefix]
+//      * specifies the prefix to log before printing the rest of the error message
+//          * this does not prefix the time, result printout, or calling location
 //  [.do_log]
 //      * determines whether calling [lurk_log] actually writes to [stdout] or not it may be changed
 //        at any time, and is useful when only certain logs are desired
