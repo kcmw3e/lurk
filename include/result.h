@@ -53,8 +53,8 @@
 #define RETURN_INTERNAL_ERROR()                                                                    \
     LURK_ERROR_CALL(RESULT_INTERNAL_ERROR, __func__, LURK_LINE_STRING, "Internal error.")
 
-#define RETURN_ERROR(result, err)                                                                  \
-    LURK_ERROR_CALL(result, __func__, LURK_LINE_STRING, err)
+#define RETURN_ERROR(result, err, ...)                                                                  \
+    LURK_ERROR_CALL(result, __func__, LURK_LINE_STRING, err __VA_OPT__(,) __VA_ARGS__)
 
 
 // The result enum defines many common results. They are split into to four categories: error,
