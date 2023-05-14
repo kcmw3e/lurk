@@ -160,7 +160,8 @@ typedef int boolresult_t;
 // Notes
 //  * if using [lurk_log] and [lurk_err], it is up to these functions to output a new line after the
 //    logging (unless [fmt] contains the new line, where it is up to the programmer in that case)
-//      * the default log and error functions automatically add a new line
+//      * the default log and err functions automatically add a new line if [result_config.postfix]
+//        is left default
 typedef void result_log_fn(result_t result, const char* fmt, va_list args);
 typedef void result_err_fn(result_t result,
                                const char* caller, const char* loc,
@@ -179,12 +180,11 @@ typedef void result_err_fn(result_t result,
 //      * specifies the postfix string to log after all printing is done
 //          * by default this is ["\n"] so that log calls print newlines
 //  [.do_log]
-//      * determines whether calling [lurk_log] actually writes to [stdout] or not it may be changed
-//        at any time, and is useful when only certain logs are desired
+//      * determines whether calling [lurk_log] actually writes to [stdout] or not
+//      * it may be changed at any time and is useful when only certain logs are desired
 //  [.do_err]
-//      * determines whether calling [lurk_err] actually writes to [stderr] or not it may be changed
-//        at any time, and is useful when only certain calls to [lurk_err] are
-//        to have output
+//      * determines whether calling [lurk_err] actually writes to [stderr] or not
+//      * it may be changed at any time and is useful when only certain errors are desired
 //  [.log_fn]
 //      * a pointer to a [result_log_fn] function
 //      * if this field is not [NULL], calling [lurk_log] will in turn call the function pointed to
@@ -265,7 +265,7 @@ typedef struct result_config result_config_t;
 //          * any integer that fits in the underlying type of [result_t]
 //  ==   Return   ==
 //      [true]
-//          * only if [result] is [RESULT_TRUE]
+//          * only if [result] is exactly [RESULT_TRUE]
 //      [false]
 //          * otherwise
 // [is_false]
@@ -275,7 +275,7 @@ typedef struct result_config result_config_t;
 //          * any integer that fits in the underlying type of [result_t]
 //  ==   Return   ==
 //      [true]
-//          * only if [result] is [RESULT_FALSE]
+//          * only if [result] is exactly [RESULT_FALSE]
 //      [false]
 //          * otherwise
 bool is_success(result_t result);
@@ -288,7 +288,7 @@ bool is_false(result_t result);
 // [lurk_set_result_config]
 //  * set the config struct to something non-default; see the documentation above for how fields can
 //    be set to pull from the default, or alternatively first use [lurk_get_defaults] to populate
-//    the config first, then fill in only the fields that need to be non-default
+//    the config, then fill in only the fields that need to be non-default
 //  == Parameters ==
 //      [config]
 //          * a pointer to the config struct to pull config options from
