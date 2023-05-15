@@ -36,7 +36,7 @@
     LURK_ERROR_CALL(result, __func__, LURK_LINE_STRING, "Callback trace.")
 
 #define RETURN_PASS_ERROR(result, pass)                                                            \
-    LURK_ERROR_CALL(result, __func__, LURK_LINE_STRING, "Callback trace, passing: [%08x].")
+    LURK_ERROR_CALL(result, __func__, LURK_LINE_STRING, "Callback trace, passing: [%08x].", pass)
 
 #define RETURN_BAD_PARAM(param)                                                                    \
     LURK_ERROR_CALL(RESULT_BAD_PARAM, __func__, LURK_LINE_STRING, "Bad parameter ["#param"].")
