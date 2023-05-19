@@ -53,6 +53,10 @@
     LURK_ERROR_CALL(RESULT_INVALID_OBJECT, __func__, LURK_LINE_STRING,                             \
              "Invalid object member ["#obj"."#member"].")
 
+#define RETURN_INVALID_OBJECT_MEMBERS(obj, ...)                                                    \
+    LURK_ERROR_CALL(RESULT_INVALID_OBJECT, __func__, LURK_LINE_STRING,                             \
+             "Invalid object member ["#obj".("#__VA_ARGS__")].")
+
 #define RETURN_INTERNAL_ERROR()                                                                    \
     LURK_ERROR_CALL(RESULT_INTERNAL_ERROR, __func__, LURK_LINE_STRING, "Internal error.")
 
