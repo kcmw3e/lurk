@@ -81,11 +81,11 @@
 #   define VALID_OBJECT_MEMBER_GUARD(fn, obj, memb)
 #endif // LURK_NO_VALID_GUARD_CALL
 
-#ifndef LURK_NO_CHECK_NULL_GUARD
-#   define NULL_GUARD(ptr) if (ptr == NULL) return RETURN_BAD_PARAM_NULL(ptr);
+#ifndef LURK_NO_CHECK_NULL_PARAM_GUARD
+#   define NULL_PARAM_GUARD(ptr) if (ptr == NULL) return RETURN_BAD_PARAM_NULL(ptr);
 #else
-#   define NULL_GUARD(ptr)
-#endif // LURK_NO_CHECK_NULL_GUARD
+#   define NULL_PARAM_GUARD(ptr)
+#endif // LURK_NO_CHECK_NULL_PARAM_GUARD
 
 
 // These macros can be used to replicate repetitive checks that should immediately return. They are
