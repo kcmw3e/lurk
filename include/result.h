@@ -88,6 +88,16 @@
 #endif // LURK_NO_CHECK_NULL_GUARD
 
 
+// These macros can be used to replicate repetitive checks that should immediately return. They are
+// similar to the guards defined above but cannot be disabled.
+// ---------------------------------------------------------------------------------------------- //
+#define VALIDATE_OBJECT(fn, obj)                                                                   \
+    if (!is_valid_object(fn(obj))) return RETURN_INVALID_OBJECT(obj)
+
+#define VALIDATE_OBJECT_MEMBER(fn, obj, memb)                                                      \
+    if (!is_valid_object(fn(memb))) return RETURN_INVALID_OBJECT_MEMBER(obj, memb)
+
+
 // The result enum defines many common results. They are split into to four categories: error,
 // success, boolean, and status. Errors are always negative, statuses are always positive, and
 // success is always zero. Note that a *failure* is not the same as an error. Errors are strictly
