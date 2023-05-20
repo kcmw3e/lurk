@@ -81,6 +81,12 @@
 #   define VALIDATE_OBJECT_MEMBER(fn, obj, memb)
 #endif // LURK_NO_CALL_VALIDATE_OBJECT
 
+#ifndef LURK_NO_CHECK_NULL_GUARD
+#   define NULL_GUARD(ptr) if (ptr == NULL) return RETURN_BAD_PARAM_NULL(ptr);
+#else
+#   define NULL_GUARD(ptr)
+#endif // LURK_NO_CHECK_NULL_GUARD
+
 
 // The result enum defines many common results. They are split into to four categories: error,
 // success, boolean, and status. Errors are always negative, statuses are always positive, and
