@@ -43,19 +43,19 @@
 
 #define RETURN_BAD_PARAM_NULL(param)                                                               \
     LURK_ERROR_CALL(RESULT_BAD_PARAM, __func__, LURK_LINE_STRING,                                  \
-             "Bad parameter ["#param"]. Must not be [NULL]")
+                    "Bad parameter ["#param"]. Must not be [NULL]")
 
 #define RETURN_INVALID_OBJECT(obj)                                                                 \
     LURK_ERROR_CALL(RESULT_INVALID_OBJECT, __func__, LURK_LINE_STRING,                             \
-            "Invalid object ["#obj"].")
+                    "Invalid object ["#obj"].")
 
 #define RETURN_INVALID_OBJECT_MEMBER(obj, member)                                                  \
     LURK_ERROR_CALL(RESULT_INVALID_OBJECT, __func__, LURK_LINE_STRING,                             \
-             "Invalid object member ["#obj"."#member"].")
+                    "Invalid object member ["#obj"."#member"].")
 
 #define RETURN_INVALID_OBJECT_MEMBERS(obj, ...)                                                    \
     LURK_ERROR_CALL(RESULT_INVALID_OBJECT, __func__, LURK_LINE_STRING,                             \
-             "Invalid object member ["#obj".("#__VA_ARGS__")].")
+                    "Invalid object member ["#obj".("#__VA_ARGS__")].")
 
 #define RETURN_INTERNAL_ERROR()                                                                    \
     LURK_ERROR_CALL(RESULT_INTERNAL_ERROR, __func__, LURK_LINE_STRING, "Internal error.")
