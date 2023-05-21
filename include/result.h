@@ -28,9 +28,11 @@
 // ---------------------------------------------------------------------------------------------- //
 #ifndef LURK_NO_CALL_RETURN_ERROR
 #   define RETURN_ERROR(result, err) lurk_err(result, __func__, LURK_LINE_STRING, err)
-#else
 #   define RETURN_ERROR_FMT(result, err, ...)                                                      \
         lurk_err(result, __func__, LURK_LINE_STRING, err, __VA_ARGS__)
+#else
+#   define RETURN_ERROR(result, err) result
+#   define RETURN_ERROR_FMT(result, err, ...) result
 #endif
 
 #define RETURN_TRACE_ERROR(result)                                                                 \
