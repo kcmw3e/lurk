@@ -27,16 +27,11 @@
 // overhead (see below about configuration how logging can be dynamically controlled instead).
 // ---------------------------------------------------------------------------------------------- //
 #ifndef LURK_NO_CALL_RETURN_ERROR
-#   define LURK_ERROR_CALL lurk_err
+#   define RETURN_ERROR(result, err) lurk_err(result, __func__, LURK_LINE_STRING, err)
 #else
-#   define LURK_ERROR_CALL(result, ...) result
+#   define RETURN_ERROR_FMT(result, err, ...)                                                      \
+        lurk_err(result, __func__, LURK_LINE_STRING, err, __VA_ARGS__)
 #endif
-
-#define RETURN_ERROR(result, err)                                                                  \
-    LURK_ERROR_CALL(result, __func__, LURK_LINE_STRING, err)
-
-#define RETURN_ERROR_FMT(result, err, ...)                                                         \
-    LURK_ERROR_CALL(result, __func__, LURK_LINE_STRING, err, __VA_ARGS__)
 
 #define RETURN_TRACE_ERROR(result)                                                                 \
     RETURN_ERROR(result, "Callback trace.")
