@@ -35,29 +35,61 @@
 #   define RETURN_ERROR_FMT(result, err, ...) result
 #endif
 
-#define RETURN_TRACE_ERROR(result)                                                                 \
-    RETURN_ERROR(result, "Callback trace.")
+#define RETURN_TRACE_ERROR_STR "Callback trace."
+#define RETURN_TRACE_ERROR(result) RETURN_ERROR(result, RETURN_TRACE_ERROR_STR)
+#define RETURN_TRACE_ERROR_MSG(result, msg) RETURN_ERROR(result, RETURN_TRACE_ERROR_STR" "msg)
+#define RETURN_TRACE_ERROR_FMT(result, fmt, ...)                                                   \
+    RETURN_ERROR_FMT(result, RETURN_TRACE_ERROR_STR" "fmt, __VA_ARGS__)
 
-#define RETURN_PASS_ERROR(result, pass)                                                            \
-    RETURN_ERROR_FMT(result, "Callback trace, passing: [%08x].", pass)
+#define RETURN_PASS_ERROR_STR "Callback trace, passing [%08x]."
+#define RETURN_PASS_ERROR(result, pass) RETURN_ERROR_FMT(result, RETURN_PASS_ERROR_STR, pass)
+#define RETURN_PASS_ERROR_MSG(result, pass, msg)                                                   \
+    RETURN_ERROR_FMT(result, RETURN_PASS_ERROR_STR" "msg, pass)
+#define RETURN_PASS_ERROR_FMT(result, pass, fmt, ...)                                              \
+    RETURN_ERROR_FMT(result, RETURN_PASS_ERROR_STR" "fmt, pass, __VA_ARGS__)
 
-#define RETURN_BAD_PARAM(param)                                                                    \
-    RETURN_ERROR(RESULT_BAD_PARAM, "Bad parameter ["#param"].")
+#define RETURN_BAD_PARAM_STR(param) "Bad parameter ["#param"]."
+#define RETURN_BAD_PARAM(param) RETURN_ERROR(RESULT_BAD_PARAM, RETURN_BAD_PARAM_STR(param))
+#define RETURN_BAD_PARAM_MSG(param, msg)                                                           \
+    RETURN_ERROR(RESULT_BAD_PARAM, RETURN_BAD_PARAM_STR(param)" "msg)
+#define RETURN_BAD_PARAM_FMT(param, fmt, ...)                                                      \
+    RETURN_ERROR_FMT(RESULT_BAD_PARAM, RETURN_BAD_PARAM_STR(param)" "fmt, __VA_ARGS__)
 
+#define RETURN_BAD_PARAM_NULL_STR(param) "Bad parameter ["#param"]. Must not be [NULL]."
 #define RETURN_BAD_PARAM_NULL(param)                                                               \
-    RETURN_ERROR(RESULT_BAD_PARAM, "Bad parameter ["#param"]. Must not be [NULL]")
+    RETURN_ERROR(RESULT_BAD_PARAM, RETURN_BAD_PARAM_NULL_STR(param))
+#define RETURN_BAD_PARAM_NULL_MSG(param, msg)                                                      \
+    RETURN_ERROR(RESULT_BAD_PARAM, RETURN_BAD_PARAM_NULL_STR(param)" "msg)
+#define RETURN_BAD_PARAM_NULL_FMT(param, fmt, ...)                                                 \
+    RETURN_ERROR_FMT(RESULT_BAD_PARAM, RETURN_BAD_PARAM_NULL_STR(param)" "fmt, __VA_ARGS__)
 
+#define RETURN_INVALID_OBJECT_STR(obj) "Invalid object ["#obj"]."
 #define RETURN_INVALID_OBJECT(obj)                                                                 \
-    RETURN_ERROR(RESULT_INVALID_OBJECT, "Invalid object ["#obj"].")
+    RETURN_ERROR(RESULT_INVALID_OBJECT, RETURN_INVALID_OBJECT_STR(obj))
+#define RETURN_INVALID_OBJECT_MSG(obj, msg)                                                        \
+    RETURN_ERROR(RESULT_INVALID_OBJECT, RETURN_INVALID_OBJECT_STR(obj)" "msg)
+#define RETURN_INVALID_OBJECT_FMT(obj, fmt, ...)                                                   \
+    RETURN_ERROR_FMT(RESULT_INVALID_OBJECT, RETURN_INVALID_OBJECT_STR(obj)" "fmt, __VA_ARGS__)
 
-#define RETURN_INVALID_OBJECT_MEMBER(obj, member)                                                  \
-    RETURN_ERROR(RESULT_INVALID_OBJECT, "Invalid object member ["#obj"."#member"].")
+#define RETURN_INVALID_OBJECT_MEMBER_STR(obj, memb) "Invalid object member ["#obj"."#memb"]."
+#define RETURN_INVALID_OBJECT_MEMBER(obj, memb)                                                    \
+    RETURN_ERROR(RESULT_INVALID_OBJECT, RETURN_INVALID_OBJECT_MEMBER_STR(obj, memb))
+#define RETURN_INVALID_OBJECT_MEMBER_MSG(obj, memb, msg)                                           \
+    RETURN_ERROR(RESULT_INVALID_OBJECT, RETURN_INVALID_OBJECT_MEMBER_STR(obj, memb)" "msg)
+#define RETURN_INVALID_OBJECT_MEMBER_FMT(obj, memb, fmt, ...)                                     \
+    RETURN_ERROR_FMT(RESULT_INVALID_OBJECT, RETURN_INVALID_OBJECT_MEMBER_STR(obj, memb)" "fmt, __VA_ARGS__)
 
+#define RETURN_INVALID_OBJECT_MEMBERS_STR(obj, ...) "Invalid object members ["#obj".("#__VA_ARGS__")]."
 #define RETURN_INVALID_OBJECT_MEMBERS(obj, ...)                                                    \
-    RETURN_ERROR(RESULT_INVALID_OBJECT, "Invalid object member ["#obj".("#__VA_ARGS__")].")
+    RETURN_ERROR(RESULT_INVALID_OBJECT, RETURN_INVALID_OBJECT_MEMBERS_STR(obj, __VA_ARGS__))
 
+#define RETURN_INTERNAL_ERROR_STR "Internal error."
 #define RETURN_INTERNAL_ERROR()                                                                    \
-    RETURN_ERROR(RESULT_INTERNAL_ERROR, "Internal error.")
+    RETURN_ERROR(RESULT_INTERNAL_ERROR, RETURN_INTERNAL_ERROR_STR)
+#define RETURN_INTERNAL_ERROR_MSG(msg)                                                             \
+    RETURN_ERROR(RESULT_INTERNAL_ERROR, RETURN_INTERNAL_ERROR_STR" "msg)
+#define RETURN_INTERNAL_ERROR_FMT(fmt, ...)                                                        \
+    RETURN_ERROR_FMT(RESULT_INTERNAL_ERROR, RETURN_INTERNAL_ERROR_STR" "fmt, __VA_ARGS__)
 
 
 // These macros can be used to replicate repetitive guards that may be omitted for performance in
