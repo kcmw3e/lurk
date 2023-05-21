@@ -32,39 +32,35 @@
 #   define LURK_ERROR_CALL(result, ...) result
 #endif
 
-#define RETURN_TRACE_ERROR(result)                                                                 \
-    LURK_ERROR_CALL(result, __func__, LURK_LINE_STRING, "Callback trace.")
-
-#define RETURN_PASS_ERROR(result, pass)                                                            \
-    LURK_ERROR_CALL(result, __func__, LURK_LINE_STRING, "Callback trace, passing: [%08x].", pass)
-
-#define RETURN_BAD_PARAM(param)                                                                    \
-    LURK_ERROR_CALL(RESULT_BAD_PARAM, __func__, LURK_LINE_STRING, "Bad parameter ["#param"].")
-
-#define RETURN_BAD_PARAM_NULL(param)                                                               \
-    LURK_ERROR_CALL(RESULT_BAD_PARAM, __func__, LURK_LINE_STRING,                                  \
-                    "Bad parameter ["#param"]. Must not be [NULL]")
-
-#define RETURN_INVALID_OBJECT(obj)                                                                 \
-    LURK_ERROR_CALL(RESULT_INVALID_OBJECT, __func__, LURK_LINE_STRING,                             \
-                    "Invalid object ["#obj"].")
-
-#define RETURN_INVALID_OBJECT_MEMBER(obj, member)                                                  \
-    LURK_ERROR_CALL(RESULT_INVALID_OBJECT, __func__, LURK_LINE_STRING,                             \
-                    "Invalid object member ["#obj"."#member"].")
-
-#define RETURN_INVALID_OBJECT_MEMBERS(obj, ...)                                                    \
-    LURK_ERROR_CALL(RESULT_INVALID_OBJECT, __func__, LURK_LINE_STRING,                             \
-                    "Invalid object member ["#obj".("#__VA_ARGS__")].")
-
-#define RETURN_INTERNAL_ERROR()                                                                    \
-    LURK_ERROR_CALL(RESULT_INTERNAL_ERROR, __func__, LURK_LINE_STRING, "Internal error.")
-
 #define RETURN_ERROR(result, err)                                                                  \
     LURK_ERROR_CALL(result, __func__, LURK_LINE_STRING, err)
 
 #define RETURN_ERROR_FMT(result, err, ...)                                                         \
     LURK_ERROR_CALL(result, __func__, LURK_LINE_STRING, err, __VA_ARGS__)
+
+#define RETURN_TRACE_ERROR(result)                                                                 \
+    RETURN_ERROR(result, "Callback trace.")
+
+#define RETURN_PASS_ERROR(result, pass)                                                            \
+    RETURN_ERROR_FMT(result, "Callback trace, passing: [%08x].", pass)
+
+#define RETURN_BAD_PARAM(param)                                                                    \
+    RETURN_ERROR(RESULT_BAD_PARAM, "Bad parameter ["#param"].")
+
+#define RETURN_BAD_PARAM_NULL(param)                                                               \
+    RETURN_ERROR(RESULT_BAD_PARAM, "Bad parameter ["#param"]. Must not be [NULL]")
+
+#define RETURN_INVALID_OBJECT(obj)                                                                 \
+    RETURN_ERROR(RESULT_INVALID_OBJECT, "Invalid object ["#obj"].")
+
+#define RETURN_INVALID_OBJECT_MEMBER(obj, member)                                                  \
+    RETURN_ERROR(RESULT_INVALID_OBJECT, "Invalid object member ["#obj"."#member"].")
+
+#define RETURN_INVALID_OBJECT_MEMBERS(obj, ...)                                                    \
+    RETURN_ERROR(RESULT_INVALID_OBJECT, "Invalid object member ["#obj".("#__VA_ARGS__")].")
+
+#define RETURN_INTERNAL_ERROR()                                                                    \
+    RETURN_ERROR(RESULT_INTERNAL_ERROR, "Internal error.")
 
 
 // These macros can be used to replicate repetitive guards that may be omitted for performance in
