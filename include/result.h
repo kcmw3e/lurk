@@ -192,8 +192,8 @@
 //      * see the documentation for [RESULT_TRUE] for an extra warning and best practices regarding
 //        the usage of boolean results
 enum result {
-    RESULT_INVALID_OBJECT = -2,
     RESULT_INTERNAL_ERROR = -3,
+    RESULT_INVALID_OBJECT = -2,
     RESULT_BAD_PARAM      = -1,
 
     RESULT_SUCCESS = 0,
