@@ -153,12 +153,12 @@
 // for indicating when some unexpected behavior occurs or an invalid value arises.
 // ---------------------------------------------------------------------------------------------- //
 // [enum result]
-//  [RESULT_INVALID_OBJECT]
-//      * this error is useful for when a program encounters an object (typically a struct) that is
-//        invalid and wishes to notify a client or calling program
 //  [RESULT_INTERNAL_ERROR]
 //      * this error is useful when programs encounter bugs or unexpected behavior internally and
 //        either wish to signal to itself or a calling program that some unknown error has happened
+//  [RESULT_INVALID_OBJECT]
+//      * this error is useful for when a program encounters an object (typically a struct) that is
+//        invalid and wishes to notify a client or calling program
 //  [RESULT_BAD_PARAM]
 //      * this error is useful to notify a calling program that a parameter it has passed to a
 //        function is invalid in some way
