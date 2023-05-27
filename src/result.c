@@ -88,6 +88,11 @@ bool is_success(result_t result) {
     return false;
 }
 
+bool is_failure(result_t result) {
+    if (result == RESULT_FAILURE) return true;
+    return false;
+}
+
 bool is_valid_object(result_t result) {
     if (result == RESULT_VALID_OBJECT) return true;
     return false;

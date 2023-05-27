@@ -312,6 +312,23 @@ typedef struct result_config result_config_t;
 //                values for its results, keeping in mind this behavior
 //      [false]
 //          * otherwise
+// [is_failure]
+//  * determines if a result is [RESULT_FAILURE] or not
+//  == Parameters ==
+//      [result]
+//          * the result to check
+//          * may be any integer that fits in the underlying type of [result_t]
+//  ==   Return   ==
+//      [true]
+//          * if [result] is exactly [RESULT_FAILURE]
+//          * note that if [RESULT_TRUE] or any value equivalent to [RESULT_FAILURE] is passed in,
+//            there is no way to distinguish between them
+//              * as such, a programmer should take great care in deciding what results from
+//                functions to pass as [result]
+//              * similarly, any library implementing its own results should take care in choosing
+//                values for its results, keeping in mind this behavior
+//      [false]
+//          * otherwise
 // [is_valid_object]
 //  * determines if a result is [RESULT_VALID_OBJECT] or not
 //  == Parameters ==
@@ -366,6 +383,7 @@ typedef struct result_config result_config_t;
 //      [false]
 //          * otherwise
 bool is_success(result_t result);
+bool is_failure(result_t result);
 bool is_valid_object(result_t result);
 bool is_error(result_t result);
 bool is_lurk_err(result_t result);
