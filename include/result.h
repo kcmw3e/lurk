@@ -38,6 +38,9 @@
 #endif
 
 
+#define DEFINE_RETURN_OBJ_MACRO(obj, memb, macro) (obj.memb = macro, obj)
+
+
 #define RETURN_TRACE_ERROR_STR                                                                     \
     "Callback trace."
 #define RETURN_TRACE_ERROR(result)                                                                 \
@@ -47,6 +50,14 @@
 #define RETURN_TRACE_ERROR_FMT(result, fmt, ...)                                                   \
     RETURN_ERROR_FMT(result, LURK_STR_SPACECAT(RETURN_TRACE_ERROR_STR, fmt), __VA_ARGS__)
 
+#define RETURN_OBJ_TRACE_ERROR(obj, memb, result)                                                  \
+    DEFINE_RETURN_OBJ_MACRO(obj, memb, RETURN_TRACE_ERROR(result))
+#define RETURN_OBJ_TRACE_ERROR_MSG(obj, memb, result, msg)                                         \
+    DEFINE_RETURN_OBJ_MACRO(obj, memb, RETURN_TRACE_ERROR_MSG(result, msg))
+#define RETURN_OBJ_TRACE_ERROR_FMT(obj, memb, result, fmt, ...)                                    \
+    DEFINE_RETURN_OBJ_MACRO(obj, memb, RETURN_TRACE_ERROR_FMT(result, fmt, __VA_ARGS__))
+
+
 #define RETURN_PASS_ERROR_STR                                                                      \
     "Callback trace, passing [%08x]."
 #define RETURN_PASS_ERROR(result, pass)                                                            \
@@ -55,6 +66,14 @@
     RETURN_ERROR_FMT(result, LURK_STR_SPACECAT(RETURN_PASS_ERROR_STR, msg), pass)
 #define RETURN_PASS_ERROR_FMT(result, pass, fmt, ...)                                              \
     RETURN_ERROR_FMT(result, LURK_STR_SPACECAT(RETURN_PASS_ERROR_STR, fmt), pass, __VA_ARGS__)
+
+#define RETURN_OBJ_PASS_ERROR(obj, memb, result, pass)                                             \
+    DEFINE_RETURN_OBJ_MACRO(obj, memb, RETURN_PASS_ERROR(result, pass))
+#define RETURN_OBJ_PASS_ERROR_MSG(obj, memb, result, pass, msg)                                    \
+    DEFINE_RETURN_OBJ_MACRO(obj, memb, RETURN_PASS_ERROR_MSG(result, pass, msg))
+#define RETURN_OBJ_PASS_ERROR_FMT(obj, memb, result, pass, fmt, ...)                               \
+    DEFINE_RETURN_OBJ_MACRO(obj, memb, RETURN_PASS_ERROR_FMT(result, pass, fmt, __VA_ARGS__))
+
 
 #define RETURN_BAD_PARAM_STR(param)                                                                \
     "Bad parameter ["#param"]."
@@ -66,6 +85,14 @@
     RETURN_ERROR_FMT(RESULT_BAD_PARAM,                                                             \
                      LURK_STR_SPACECAT(RETURN_BAD_PARAM_STR(param), fmt), __VA_ARGS__)
 
+#define RETURN_OBJ_BAD_PARAM(obj, memb, param)                                                     \
+    DEFINE_RETURN_OBJ_MACRO(obj, memb, RETURN_BAD_PARAM(param))
+#define RETURN_OBJ_BAD_PARAM_MSG(obj, memb, param, msg)                                            \
+    DEFINE_RETURN_OBJ_MACRO(obj, memb, RETURN_BAD_PARAM_MSG(param, msg))
+#define RETURN_OBJ_BAD_PARAM_FMT(obj, memb, param, fmt, ...)                                       \
+    DEFINE_RETURN_OBJ_MACRO(obj, memb, RETURN_BAD_PARAM_FMT(param, fmt, __VA_ARGS__))
+
+
 #define RETURN_BAD_PARAM_NULL_STR(param)                                                           \
     "Bad parameter ["#param"]. Must not be [NULL]."
 #define RETURN_BAD_PARAM_NULL(param)                                                               \
@@ -76,6 +103,14 @@
     RETURN_ERROR_FMT(RESULT_BAD_PARAM,                                                             \
                      LURK_STR_SPACECAT(RETURN_BAD_PARAM_NULL_STR(param), fmt), __VA_ARGS__)
 
+#define RETURN_OBJ_BAD_PARAM_NULL(obj, memb, param)                                                \
+    DEFINE_RETURN_OBJ_MACRO(obj, memb, RETURN_BAD_PARAM_NULL(param))
+#define RETURN_OBJ_BAD_PARAM_NULL_MSG(obj, memb, param, msg)                                       \
+    DEFINE_RETURN_OBJ_MACRO(obj, memb, RETURN_BAD_PARAM_NULL_MSG(param, msg))
+#define RETURN_OBJ_BAD_PARAM_NULL_FMT(obj, memb, param, fmt, ...)                                  \
+    DEFINE_RETURN_OBJ_MACRO(obj, memb, RETURN_BAD_PARAM_NULL_FMT(param, fmt, __VA_ARGS__))
+
+
 #define RETURN_INVALID_OBJECT_STR(obj)                                                             \
     "Invalid object ["#obj"]."
 #define RETURN_INVALID_OBJECT(obj)                                                                 \
@@ -85,6 +120,14 @@
 #define RETURN_INVALID_OBJECT_FMT(obj, fmt, ...)                                                   \
     RETURN_ERROR_FMT(RESULT_INVALID_OBJECT,                                                        \
                      LURK_STR_SPACECAT(RETURN_INVALID_OBJECT_STR(obj), fmt), __VA_ARGS__)
+
+#define RETURN_OBJ_INVALID_OBJECT(ret_obj, ret_memb, obj)                                          \
+    DEFINE_RETURN_OBJ_MACRO(ret_obj, ret_memb, RETURN_INVALID_OBJECT(obj))
+#define RETURN_OBJ_INVALID_OBJECT_MSG(ret_obj, ret_memb, obj, msg)                                 \
+    DEFINE_RETURN_OBJ_MACRO(ret_obj, ret_memb, RETURN_INVALID_OBJECT_MSG(obj, msg))
+#define RETURN_OBJ_INVALID_OBJECT_FMT(ret_obj, ret_memb, obj, fmt, ...)                            \
+    DEFINE_RETURN_OBJ_MACRO(ret_obj, ret_memb, RETURN_INVALID_OBJECT_FMT(obj, fmt, __VA_ARGS__))
+
 
 #define RETURN_INVALID_OBJECT_MEMBER_STR(obj, memb)                                                \
     "Invalid object member ["#obj"."#memb"]."
@@ -98,10 +141,23 @@
                      LURK_STR_SPACECAT(RETURN_INVALID_OBJECT_MEMBER_STR(obj, memb), fmt),          \
                      __VA_ARGS__)
 
+#define RETURN_OBJ_INVALID_OBJECT_MEMBER(ret_obj, ret_memb, obj, memb)                             \
+    DEFINE_RETURN_OBJ_MACRO(ret_obj, ret_memb, RETURN_INVALID_OBJECT_MEMBER(obj, memb))
+#define RETURN_OBJ_INVALID_OBJECT_MEMBER_MSG(ret_obj, ret_memb, obj, memb, msg)                    \
+    DEFINE_RETURN_OBJ_MACRO(ret_obj, ret_memb, RETURN_INVALID_OBJECT_MEMBER_MSG(obj, memb, msg))
+#define RETURN_OBJ_INVALID_OBJECT_MEMBER_FMT(ret_obj, ret_memb, obj, memb, fmt, ...)               \
+    DEFINE_RETURN_OBJ_MACRO(ret_obj, ret_memb,                                                     \
+                            RETURN_INVALID_OBJECT_MEMBER_FMT(obj, memb, fmt, __VA_ARGS__))
+
+
 #define RETURN_INVALID_OBJECT_MEMBERS_STR(obj, ...)                                                \
     "Invalid object members ["#obj".("#__VA_ARGS__")]."
 #define RETURN_INVALID_OBJECT_MEMBERS(obj, ...)                                                    \
     RETURN_ERROR(RESULT_INVALID_OBJECT, RETURN_INVALID_OBJECT_MEMBERS_STR(obj, __VA_ARGS__))
+
+#define RETURN_OBJ_INVALID_OBJECT_MEMBERS(ret_obj, ret_memb, obj, ...)                             \
+    DEFINE_RETURN_OBJ_MACRO(ret_obj, ret_memb, RETURN_INVALID_OBJECT_MEMBERS(obj, __VA_ARGS__))
+
 
 #define RETURN_INTERNAL_ERROR_STR                                                                  \
     "Internal error."
@@ -113,6 +169,13 @@
     RETURN_ERROR_FMT(RESULT_INTERNAL_ERROR,                                                        \
                      LURK_STR_SPACECAT(RETURN_INTERNAL_ERROR_STR, fmt), __VA_ARGS__)
 
+#define RETURN_OBJ_INTERNAL_ERROR(obj, memb)                                                       \
+    DEFINE_RETURN_OBJ_MACRO(obj, memb, RETURN_INTERNAL_ERROR())
+#define RETURN_OBJ_INTERNAL_ERROR_MSG(obj, memb, msg)                                              \
+    DEFINE_RETURN_OBJ_MACRO(obj, memb, RETURN_INTERNAL_ERROR_MSG(msg))
+#define RETURN_OBJ_INTERNAL_ERROR_FMT(obj, memb, fmt, ...)                                         \
+    DEFINE_RETURN_OBJ_MACRO(obj, memb, RETURN_INTERNAL_ERROR_FMT(fmt, __VA_ARGS__))
+
 
 // These macros can be used to replicate repetitive guards that may be omitted for performance in
 // some cases but desired for debugging during development.
@@ -120,20 +183,31 @@
 #ifndef LURK_NO_CALL_GUARD_VALID_OBJECT
 #   define GUARD_VALID_OBJECT(fn, obj)                                                             \
         if (!is_valid_object(fn(obj))) return RETURN_INVALID_OBJECT(obj)
+#   define OBJ_GUARD_VALID_OBJECT(ret_obj, ret_memb, fn, obj)                                      \
+        if (!is_valid_object(fn(obj)))                                                             \
+            return RETURN_OBJ_INVALID_OBJECT(ret_obj, ret_memb, obj)
 
 #   define GUARD_VALID_OBJECT_MEMBER(fn, obj, memb)                                                \
         if (!is_valid_object(fn(memb))) return RETURN_INVALID_OBJECT_MEMBER(obj, memb)
+#   define OBJ_GUARD_VALID_OBJECT_MEMBER(ret_obj, ret_memb, fn, obj, memb)                         \
+        if (!is_valid_object(fn(memb)))                                                            \
+            return RETURN_OBJ_INVALID_OBJECT(ret_obj, ret_memb, obj)
 #else
 #   define GUARD_VALID_OBJECT(fn, obj)
+#   define OBJ_GUARD_VALID_OBJECT(ret_obj, ret_memb, fn, obj)
 
 #   define GUARD_VALID_OBJECT_MEMBER(fn, obj, memb)
+#   define OBJ_GUARD_VALID_OBJECT_MEMBER(ret_obj, ret_memb, fn, obj, memb)
 #endif // LURK_NO_CALL_GUARD_VALID_OBJECT
 
 
 #ifndef LURK_NO_CALL_GUARD_NULL_PARAM
 #   define GUARD_NULL_PARAM(ptr) if (ptr == NULL) return RETURN_BAD_PARAM_NULL(ptr);
+#   define OBJ_GUARD_NULL_PARAM(obj, memb, ptr)                                                    \
+            if (ptr == NULL) return RETURN_OBJ_BAD_PARAM_NULL(obj, memb, ptr)
 #else
 #   define GUARD_NULL_PARAM(ptr)
+#   define OBJ_GUARD_NULL_PARAM(obj, memb, ptr)
 #endif // LURK_NO_CALL_GUARD_NULL_PARAM
 
 
@@ -142,9 +216,14 @@
 // ---------------------------------------------------------------------------------------------- //
 #define VALIDATE_OBJECT(fn, obj)                                                                   \
     if (!is_valid_object(fn(obj))) return RETURN_INVALID_OBJECT(obj)
+#define OBJ_VALIDATE_OBJECT(ret_obj, ret_memb, fn, obj)                                            \
+    if (!is_valid_object(fn(obj))) return RETURN_OBJ_INVALID_OBJECT(ret_obj, ret_memb, obj)
 
 #define VALIDATE_OBJECT_MEMBER(fn, obj, memb)                                                      \
     if (!is_valid_object(fn(memb))) return RETURN_INVALID_OBJECT_MEMBER(obj, memb)
+#define OBJ_VALIDATE_OBJECT_MEMBER(ret_obj, ret_memb, fn, obj, memb)                               \
+    if (!is_valid_object(fn(memb)))                                                                \
+        return RETURN_OBJ_INVALID_OBJECT_MEMBER(ret_obj, ret_memb, obj, memb)
 
 
 // The result enum defines many common results. They are split into to four categories: error,
