@@ -118,22 +118,22 @@
 // some cases but desired for debugging during development.
 // ---------------------------------------------------------------------------------------------- //
 #ifndef LURK_NO_VALID_GUARD_CALL
-#   define VALID_OBJECT_GUARD(fn, obj)                                                             \
+#   define GUARD_VALID_OBJECT(fn, obj)                                                             \
         if (!is_valid_object(fn(obj))) return RETURN_INVALID_OBJECT(obj)
 
-#   define VALID_OBJECT_MEMBER_GUARD(fn, obj, memb)                                                \
+#   define GUARD_VALID_OBJECT_MEMBER(fn, obj, memb)                                                \
         if (!is_valid_object(fn(memb))) return RETURN_INVALID_OBJECT_MEMBER(obj, memb)
 #else
-#   define VALID_OBJECT_GUARD(fn, obj)
+#   define GUARD_VALID_OBJECT(fn, obj)
 
-#   define VALID_OBJECT_MEMBER_GUARD(fn, obj, memb)
+#   define GUARD_VALID_OBJECT_MEMBER(fn, obj, memb)
 #endif // LURK_NO_VALID_GUARD_CALL
 
 
 #ifndef LURK_NO_CHECK_NULL_PARAM_GUARD
-#   define NULL_PARAM_GUARD(ptr) if (ptr == NULL) return RETURN_BAD_PARAM_NULL(ptr);
+#   define GUARD_NULL_PARAM(ptr) if (ptr == NULL) return RETURN_BAD_PARAM_NULL(ptr);
 #else
-#   define NULL_PARAM_GUARD(ptr)
+#   define GUARD_NULL_PARAM(ptr)
 #endif // LURK_NO_CHECK_NULL_PARAM_GUARD
 
 
