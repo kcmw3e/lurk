@@ -117,7 +117,7 @@
 // These macros can be used to replicate repetitive guards that may be omitted for performance in
 // some cases but desired for debugging during development.
 // ---------------------------------------------------------------------------------------------- //
-#ifndef LURK_NO_VALID_GUARD_CALL
+#ifndef LURK_NO_CALL_GUARD_VALID_OBJECT
 #   define GUARD_VALID_OBJECT(fn, obj)                                                             \
         if (!is_valid_object(fn(obj))) return RETURN_INVALID_OBJECT(obj)
 
@@ -127,14 +127,14 @@
 #   define GUARD_VALID_OBJECT(fn, obj)
 
 #   define GUARD_VALID_OBJECT_MEMBER(fn, obj, memb)
-#endif // LURK_NO_VALID_GUARD_CALL
+#endif // LURK_NO_CALL_GUARD_VALID_OBJECT
 
 
-#ifndef LURK_NO_CHECK_NULL_PARAM_GUARD
+#ifndef LURK_NO_CALL_GUARD_NULL_PARAM
 #   define GUARD_NULL_PARAM(ptr) if (ptr == NULL) return RETURN_BAD_PARAM_NULL(ptr);
 #else
 #   define GUARD_NULL_PARAM(ptr)
-#endif // LURK_NO_CHECK_NULL_PARAM_GUARD
+#endif // LURK_NO_CALL_GUARD_NULL_PARAM
 
 
 // These macros can be used to replicate repetitive checks that should immediately return. They are
